@@ -623,6 +623,186 @@
 </section>
 <!-- END: Why Choose Our Tutoring Section -->
 
+
+<!-- BEGIN: Pricing & Membership Section -->
+
+<!-- SECTION: Scoped Styles -->
+<style>
+  #pricing-section {
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 3rem 1rem;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* New: Wrapper for content excluding banner */
+  #pricing-section .content-wrapper {
+    border: 1px solid #FFD700;
+    border-radius: 6px;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  #pricing-section h2 {
+    font-size: 2.2em;
+    margin: 1.5rem 0 1rem;
+  }
+
+  #pricing-section p {
+    max-width: 800px;
+    margin: 0.5rem auto 1.5rem;
+    line-height: 1.6;
+    color: #ddd;
+  }
+
+  #pricing-section .highlight {
+    color: #ff0044;
+    font-weight: bold;
+  }
+
+  #pricing-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem auto;
+    max-width: 700px;
+    text-align: left;
+  }
+
+  #pricing-section ul li {
+    position: relative;
+    padding-left: 2em;
+    margin: 1rem 0;
+    color: #ddd;
+  }
+
+  #pricing-section ul li::before {
+    content: "➤";
+    position: absolute;
+    left: 0;
+    color: #FF8C00;
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  /* Converter Container */
+  #pricing-section .conversion-box {
+    margin: 2rem auto 0;
+    padding: 1rem;
+    background: #222;
+    border-radius: 6px;
+    max-width: 600px;
+    text-align: center;
+  }
+
+  #oanda_ecc {
+    width: 100%;
+  }
+
+  #oanda_ecc span {
+    color: #fff;
+    font-size: 0.85em;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+</style>
+
+<!-- SECTION: Pricing Content -->
+<section id="pricing-section">
+
+  <!-- SUBSECTION: Banner Image -->
+  <img
+    src="https://i.postimg.cc/bJWWLpq5/In-Shot-20250829-150205226.jpg"
+    alt="STEMSphere Membership Tiers Banner"
+    style="max-width:100%; height:auto; border-radius:8px; margin-bottom:2rem;"
+  />
+
+  <!-- SUBSECTION: Gold-Bordered Wrapper -->
+  <div class="content-wrapper">
+
+    <!-- SUBSECTION: Title -->
+    <h2>What Are Our Costs?</h2>
+
+    <!-- SUBSECTION: Membership Description -->
+    <p>
+      We offer flexible monthly memberships designed to fit your learning style and budget.  
+      Each course is billed monthly, and each plan covers <span class="highlight">one subject that meets once a week</span>.  
+      Most students stack several classes to build the schedule that works best for them.
+    </p>
+
+    <!-- SUBSECTION: Pricing Tiers -->
+    <ul>
+      <li><span class="highlight">1-on-1 Private Tutoring</span> — $175 USD/month</li>
+      <li><span class="highlight">Small Group (up to 4 students)</span> — $98 USD/month</li>
+      <li><span class="highlight">Mid Group Class (6–10 students)</span> — $48 USD/month</li>
+    </ul>
+
+    <!-- SUBSECTION: Currency Support Info -->
+    <p>
+      We accept payments in <span class="highlight">most global currencies</span>, including USD, EUR, GBP, NGN, INR, CAD, AUD, JPY, HKD, SGD, PHP, KRW, MYR, THB, TWD, ZAR, BRL, MXN, and more.  
+      Use the converter below to estimate your local cost.
+    </p>
+
+    <!-- SUBSECTION: Currency Converter (OANDA Widget) -->
+    <div class="conversion-box">
+      <div id="oanda_ecc">
+        <span>Currency Converter by OANDA</span>
+        <script src="https://www.oanda.com/embedded/converter/get/b2FuZGFlY2N1c2VyLy9kZWZhdWx0/?lang=en"></script>
+      </div>
+    </div>
+
+  </div><!-- /.content-wrapper -->
+
+</section>
+
+<!-- END: Pricing & Membership Section -->
+
+<!-- FULL-LANGUAGE TRANSLATOR BAR (TOP-RIGHT) -->
+<style>
+  #fallback-translator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #eef2f5;
+    padding: 6px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+  }
+  #fallback-translator select {
+    font-size: 14px;
+    padding: 4px 6px;
+  }
+</style>
+
+<div id="fallback-translator">
+  <select onchange="translatePage(this.value)">
+    <option value="en" selected>🌐 English</option>
+    <option value="af">Afrikaans</option>
+    <option value="sq">Albanian – Shq‎ip</option>
+    <option value="am">Amharic – አማርኛ</option>
+    <option value="ar">Arabic – العربية</option>
+    <!-- …all your other <option> entries… -->
+    <option value="yo">Yoruba – Èdè Yorùbá</option>
+    <option value="zu">Zulu – isiZulu</option>
+  </select>
+</div>
+
+<script>
+  function translatePage(lang) {
+    if (!lang) return;
+    const loc = encodeURIComponent(window.location.href);
+    window.location.href =
+      'https://translate.google.com/translate?sl=en&tl='
+      + lang + '&u=' + loc;
+  }
+</script>
+
+<!-- END FULL-LANGUAGE TRANSLATOR BAR (TOP-RIGHT) -->
+
 <!-- BEGIN: FAQ & Contact Section -->
 <style>
   /* FAQ & Contact Styles */
@@ -683,8 +863,8 @@
   <h3>Frequently Asked Questions</h3>
 
   <details>
-    <summary>How do I book a free trial session?</summary>
-    <p>Click the “Book Your Free Trial” button above or reach out to us via email. We’ll schedule your session within 24 hours and match you with the perfect tutor.</p>
+    <summary>How do I book a free session?</summary>
+    <p> Its not a free trial but more of a free diagnostics. We offer a free diagnostics/ mini session with one of our enrollments specilaist. The goal of our enrollments sepcialist is to match you with a tutor that fits your learning style. Click the “Book Your Free Trial” button above or reach out to us via email. We’ll schedule your session within 24 hours and match you with the perfect tutor.</p>
   </details>
 
   <details>
@@ -702,6 +882,7 @@
     <p>We accept all major credit cards and PayPal. Rates vary by tutor and format; view detailed pricing on our Pricing page or email support for a custom package.</p>
   </details>
 </section>
+<!-- END: FAQ & Contact Section -->
 
 <footer>
   © 2025 STEMSphere Academy. All rights reserved.
