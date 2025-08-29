@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Section: Document Meta & Title -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEMSphere Academy</title>
+
+  <!-- Section: External Stylesheet -->
+  <link
+    href="https://assets.calendly.com/assets/external/widget.css"
+    rel="stylesheet"
+  />
+
+  <style>
+  /* ─── Base Styles ───────────────────────────────────────────── */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+  }
+
+  /* ─── Header Container ──────────────────────────────────────── */
+  header {
+    position: relative;
+    padding: 3em 1em 1em;
+  }
+
+  /* ─── Brand Logo (SP in red square + STEMSphere) ────────────── */
+  .brand {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  .brand-logo {
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    background-color: #ff0000;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1em;
+    text-align: center;
+    border-radius: 4px;
+    margin-right: 0.5em;
+  }
+  .brand-text {
+    color: #ffffff;
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+
+
+
+<!-- 🌟 BEGIN: STEMSphere Chat Launcher + Fullscreen Calendly Prefill (Mobile Fix) -->
+
+<!-- Floating Chat Icon -->
+<img src="https://i.postimg.cc/gkHNqqQj/Chat-Logo-Cover-5.png" id="chatLauncher"
+  style="position:fixed; bottom:30px; right:30px; z-index:999; cursor:pointer; width:60px;" />
+
+<!-- Fullscreen Form Wizard -->
+<div id="chatWizard" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#ffffff; padding:0px; font-family:sans-serif; box-shadow:0 0 20px rgba(0,0,0,0.3); z-index:1000; overflow:hidden;">
+  <div style="text-align:right; padding:20px;">
+    <button onclick="document.getElementById('chatWizard').style.display='none'"
+      style="font-size:20px; background:none; border:none; cursor:pointer;">&times;</button>
+  </div>
+  <div id="stepContent"></div>
+</div>
+
+<script type="text/javascript">
+  let userData = { age: "", subject: "", style: "", help: "" };
+  let step = 0;
+
+  document.getElementById("chatLauncher").addEventListener("click", function () {
+    step = 0;
+    updateProgress(0);
+    document.getElementById("chatWizard").style.display = "block";
+    renderStep();
+  });
+
+  function updateProgress(pct) {
+    document.getElementById("stepContent").parentElement.querySelector("#progressBar")?.remove();
+    const bar = document.createElement("div");
+    bar.id = "progressBar";
+    bar.style = "height:10px; background:#e0e0e0; border-radius:5px; margin-bottom:20px;";
+    const fill = document.createElement("div");
+    fill.id = "progressFill";
+    fill.style = `height:100%; width:${pct}%; background:#009688; border-radius:5px;`;
+    bar.appendChild(fill);
+    document.getElementById("stepContent").before(bar);
+  }
+
+  function renderStep() {
+    const container = document.getElementById("stepContent");
+    if (step === 0) {
+      updateProgress(10);
+      container.innerHTML = `
+        <h2 style="padding:0 20px; color:#000000;">🎯 Tell us your needs</h2>
+        <p style="padding:0 20px; color:#000000;">We’ll match you with an ideal tutor within 60 seconds.</p>
+        <button onclick="step=1; renderStep()" style="margin:20px; background:#009688; color:#fff; padding:10px 20px; border:none;">Start</button>
+      `;
+    } else if (step === 1) {
+      updateProgress(25);
+      container.innerHTML = `
+        <h3 style="padding:0 20px; color:#000000;">🧒 Your age group:</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; padding:0 20px;">
+          ${["Elementary","Middle School","High School","College","Adult Learner"].map(age =>
+            `<button onclick="userData.age='${age}'; step=2; renderStep()" 
+              style="background:#009688; color:#fff; padding:8px 16px; border:none;">${age}</button>`).join("")}
+        </div>
+      `;
+    } else if (step === 2) {
+      updateProgress(45);
+      container.innerHTML = `
+        <h3 style="padding:0 20px; color:#000000;">📘 Choose your subject:</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; padding:0 20px;">
+          ${["Public Speaking (English)","Math","Chemistry","Python Programming","Biology","AI Made Easy","English Speaking and Writing"].map(sub =>
+            `<button onclick="userData.subject='${sub}'; step=3; renderStep()" 
+              style="background:#009688; color:#fff; padding:8px 16px; border:none;">${sub}</button>`).join("")}
+        </div>
+      `;
+    } else if (step === 3) {
+      updateProgress(65);
+      container.innerHTML = `
+        <h3 style="padding:0 20px; color:#000000;">🎓 Preferred learning style:</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; padding:0 20px;">
+          ${["1-on-1 Tutoring","Group Classes","On-Demand Course"].map(style =>
+            `<button onclick="userData.style='${style}'; step=4; renderStep()" 
+              style="background:#009688; color:#fff; padding:8px 16px; border:none;">${style}</button>`).join("")}
+        </div>
+      `;
+    } else if (step === 4) {
+      updateProgress(85);
+      container.innerHTML = `
+        <h3 style="padding:0 20px; color:#000000;">🗣️ What do you need help with?</h3>
+        <p style="padding:0 20px; color:#000000;"><strong>Let us know your learning goals, challenges, or anything specific you’d like support with:</strong></p>
+        <div style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin: 10px 20px;">
+          <textarea id="customHelp" placeholder="Type your message here..."
+            style="width:100%; padding:10px; height:100px; border:none; resize:vertical; font-size:14px;"></textarea>
+        </div>
+        <button onclick="userData.help=document.getElementById('customHelp').value; step=5; renderStep()" 
+          style="margin:0 20px 20px; background:#009688; color:#fff; padding:10px 20px; border:none;">Continue</button>
+      `;
+    } else if (step === 5) {
+      updateProgress(100);
+      container.innerHTML = `
+        <h2 style="padding:0 20px; color:#000000;">✅ Tutor Found!</h2>
+        <p style="padding:0 20px; color:#000000;">We are loading the calendar… book your free diagnostic session below with our enrollment tutor.</p>
+        <div id="calendlyFrameContainer" style="width:100vw; height:100vh; overflow:hidden;">
+          <div id="calendlyFrame" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+        </div>
+      `;
+
+      const calendlyScript = document.createElement("script");
+      calendlyScript.src = "https://assets.calendly.com/assets/external/widget.js";
+      calendlyScript.onload = () => {
+        Calendly.initInlineWidget({
+          url: "https://calendly.com/stemxsphere/trialclass?hide_gdpr_banner=1",
+          parentElement: document.getElementById("calendlyFrame"),
+          prefill: {
+            customAnswers: {
+              a1: userData.subject,
+              a2: userData.age,
+              a3: userData.style,
+              a4: userData.help
+            }
+          },
+          utm: {}
+        });
+      };
+      calendlyScript.async = true;
+      document.body.appendChild(calendlyScript);
+    }
+  }
+</script>
+<!-- ✅ END SCRIPT: STEMSphere Fullscreen Calendly + Prefill Fix -->
+
+<!-- BEGIN: Courses & Tutoring Styles -->
+<style>
+  /* 0) Kill any horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .courses-tutoring {
+    font-family: Arial, sans-serif;
+  }
+
+  /* 1) Section titles white, wrap on mobile */
+  .courses-tutoring h2 {
+    color: #ffffff;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 2rem;
+    white-space: normal;
+  }
+
+  /* 2) Intro paragraphs – free-wrap on narrow, no-break on desktop */
+  .courses-tutoring p.intro {
+    color: #ddd;
+    text-align: center;
+    max-width: 800px;
+    margin: 0.5rem auto 2rem;
+  }
+  @media (min-width: 768px) {
+    .courses-tutoring p.intro {
+      white-space: nowrap;
+    }
+  }
+
+  /* 3) Grids never overflow container */
+  .courses-tutoring .tutor-grid,
+  .courses-tutoring .course-grid {
+    display: grid;
+    grid-gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .courses-tutoring .tutor-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .courses-tutoring .tutor-subject,
+  .courses-tutoring .course-tile {
+    background: #111;
+    border: 2px solid #ff0000;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  /* 4) Responsive images */
+  .courses-tutoring .tutor-subject img,
+  .courses-tutoring .course-tile img,
+  .courses-tutoring .tutoring-banner {
+    display: block;
+    margin: 0 auto 0.5rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .courses-tutoring .tutor-subject img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0.5rem;
+  }
+
+  .courses-tutoring .course-tile img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0.5rem;
+  }
+
+  .courses-tutoring .tutoring-banner {
+    margin: 1rem auto;
+  }
+
+  .courses-tutoring .tutor-subject h4 {
+    color: #ff0000;
+    font-size: 1.1em;
+    margin: 0.5rem 0 0.25rem;
+  }
+
+  .courses-tutoring .tutor-desc {
+    color: #ddd;
+    font-size: 0.9em;
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .courses-tutoring .course-tile h3 {
+    color: #fff;
+    font-size: 1.25em;
+    margin: 0.5rem 0;
+  }
+
+  .courses-tutoring .course-tile p {
+    color: #ddd;
+    font-size: 0.9em;
+  }
+
+  .courses-tutoring .buy-button {
+    display: inline-block;
+    background: #ffffff;
+    color: #ff0000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+
+  .courses-tutoring .cta-button {
+    display: inline-block;
+    background: #ff0000;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 1rem auto 3rem;
+    text-align: center;
+  }
+</style>
+<!-- END: Courses & Tutoring Styles -->
+
+<div class="courses-tutoring">
+  <!-- BEGIN: Tutoring Subjects Section -->
+  <section id="tutoring-subjects">
+    <h2>Personalized Tutoring in Every Subject We Offer</h2>
+    <p class="intro">
+      One-on-one or small-group sessions with our expert tutors. From weekly check-ins to intensive exam prep, we cover every level.
+    </p>
+    <img
+      src="https://i.postimg.cc/mkZDYz4T/Ads-11.png"
+      alt="Tutoring Banner"
+      class="tutoring-banner"
+    />
+    <div class="tutor-grid">
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/ZRyfZcDM/Screenshot-2025-08-28-195306.png" alt="English Mastery Icon" />
+        <h4>English Mastery</h4>
+        <p class="tutor-desc">Improve reading, writing, and speaking.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/43xqCpgD/9104950.png" alt="Public Speaking Icon" />
+        <h4>Public Speaking Foundations</h4>
+        <p class="tutor-desc">Enhance your confidence and clarity.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/PxKCCzDt/Screenshot-2025-08-28-191534.png" alt="Algebra Essentials Icon" />
+        <h4>Algebra Essentials</h4>
+        <p class="tutor-desc">From linear equations to polynomials.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/xCjCVJ4B/2792361.png" alt="Geometry Foundations Icon" />
+        <h4>Geometry Foundations</h4>
+        <p class="tutor-desc">Master shapes, angles, and proofs.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/VvpLt7kc/Screenshot-2025-08-28-192149.png" alt="Pre-Calculus & Trig Icon" />
+        <h4>Pre-Calculus &amp; Trigonometry</h4>
+        <p class="tutor-desc">Functions, limits, and trig insights.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/mDhsSQqZ/Screenshot-2025-08-28-191639.png" alt="AP Calculus AB & BC Icon" />
+        <h4>AP® Calculus AB &amp; BC</h4>
+        <p class="tutor-desc">Intensive prep for derivatives and integrals.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/MGH6s2f8/5932783.png" alt="AP Statistics Icon" />
+        <h4>AP® Statistics</h4>
+        <p class="tutor-desc">Data analysis and probability fundamentals.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/dVtw1PBT/test-tube-and-chemical-compound-chemistry-colored-icon-vector.jpg" alt="General Chemistry Icon" />
+        <h4>General Chemistry Crash Course</h4>
+        <p class="tutor-desc">Core concepts in atoms and reactions.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/FHdhttVb/Screenshot-2025-08-28-193154.png" alt="Organic Chemistry Icon" />
+        <h4>Organic Chemistry Deep Dive</h4>
+        <p class="tutor-desc">Mechanisms and organic compound synthesis.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/xCR2G99Q/images-1.jpg" alt="IB Chemistry SL & HL Icon" />
+        <h4>IB Chemistry SL &amp; HL Prep</h4>
+        <p class="tutor-desc">Curriculum-focused chemistry strategies.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/RFPYVhMW/Screenshot-2025-08-28-193929.png" alt="AP Biology Masterclass Icon" />
+        <h4>AP® Biology Masterclass</h4>
+        <p class="tutor-desc">Dive into cell biology and genetics.</p>
+      </div>
+      <div class="tutor-subject">
+        <img src="https://i.postimg.cc/FHVXX9JL/Screenshot-2025-08-28-194223.png" alt="MCAT Biology Review Icon" />
+        <h4>MCAT Biology Review</h4>
+        <p class="tutor-desc">High-yield biology for MCAT success.</p>
+      </div>
+    </div>
+    <a href="#" class="cta-button">Book your free trial</a>
+  </section>
+  <!-- END: Tutoring Subjects Section -->
+
+  <!-- BEGIN: On-Demand Courses Section -->
+  <section id="on-demand-courses">
+    <h2>Learn Anywhere, Anytime with Our On-Demand Courses</h2>
+    <p class="intro">
+      Choose from expert-led, video modules with quizzes and cheat-sheets. No schedule required—learn at your own pace.
+    </p>
+    <div class="course-grid">
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/rmW97pD6/Screenshot-2025-08-28-195737.png" alt="SAT Math Icon" />
+        <h3>SAT Math</h3>
+        <p>Comprehensive SAT Math prep.</p>
+        <a href="#" class="buy-button">Buy Now</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/dVtw1PBT/test-tube-and-chemical-compound-chemistry-colored-icon-vector.jpg" alt="Chemistry Icon" />
+        <h3>Chemistry</h3>
+        <p>Fundamentals of chemical principles.</p>
+        <a href="#" class="buy-button">Buy Now</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/4yQQNFvB/AI-Essentials-Your-Step-by-Step-Guide-to-Artificial-Intelligence.jpg" alt="AI Made Easy Icon" />
+        <h3>AI Made Easy</h3>
+        <p>Hands-on introduction to AI concepts.</p>
+        <a href="#" class="buy-button">Buy Now</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/B6GFLBny/futuristic-AI.jpg" alt="Python Programming Icon" />
+        <h3>Python Programming</h3>
+        <p>Learn Python basics and beyond.</p>
+        <a href="#" class="buy-button">Buy Now</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/43xqCpgD/9104950.png" alt="Public Speaking Icon" />
+        <h3>Public Speaking Foundations</h3>
+        <p>Master voice, tone, and presence.</p>
+        <a href="#" class="buy-button">Buy Now</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/gkGKBmd5/In-Shot-20250525-224615129.jpg" alt="General Biology Icon" />
+        <h3>General Biology</h3>
+        <p>Explore cell biology and ecology.</p>
+        <a href="#" class="buy-button">Coming Soon</a>
+      </div>
+      <div class="course-tile">
+        <img src="https://i.postimg.cc/SNZcT9g2/In-Shot-20250525-224009854.jpg" alt="Kids Biology Icon" />
+        <h3>Kids Biology</h3>
+        <p>Fun biology for young learners.</p>
+        <a href="#" class="buy-button">Coming Soon</a>
+      </div>
+    </div>
+  </section>
+  <!-- END: On-Demand Courses Section -->
+</div>
+
+<!-- BEGIN: Why Choose Our Tutoring Section (Mobile‐First Responsive) -->
+<style>
+  /* Container & Typography */
+  #why-choose {
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+
+  #why-choose h2 {
+    font-size: clamp(1.75rem, 6vw, 2.2rem);
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    white-space: normal;      /* allow wrapping on small screens */
+  }
+
+  #why-choose p {
+    max-width: 800px;
+    width: 100%;
+    margin: 0.75rem auto;
+    line-height: 1.6;
+    color: #ddd;
+    text-align: center;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  /* Bullet List */
+  #why-choose ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem auto;
+    max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #why-choose ul li {
+    position: relative;
+    padding-left: 1.5em;      /* space for the custom bullet */
+    margin-bottom: 1rem;
+    color: #ddd;
+    text-align: left;         /* ensure text lines start at same point */
+  }
+
+  #why-choose ul li::before {
+    content: "♦";
+    position: absolute;
+    left: 0;
+    top: 0.2em;               /* vertically center bullet */
+    color: #FF8C00;
+    font-size: 1.1em;
+    line-height: 1;
+  }
+
+  /* Highlighted text */
+  #why-choose .highlight {
+    color: #ff0044;
+  }
+
+  /* Statistic callout */
+  #why-choose .stat {
+    text-align: center;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    margin: 2rem 0 1rem;
+    color: #ddd;
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    #why-choose {
+      padding: 1.5rem 0.75rem;
+    }
+    #why-choose h2 {
+      font-size: clamp(1.5rem, 7vw, 1.9rem);
+    }
+    #why-choose p {
+      font-size: 0.95rem;
+      margin: 0.5rem auto;
+    }
+    #why-choose ul li {
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+    #why-choose .stat {
+      font-size: clamp(0.9rem, 5vw, 1.1rem);
+    }
+  }
+</style>
+
+<section id="why-choose">
+  <h2>Why <span class="highlight">STEMSphere</span> Tutoring Is Unmatched</h2>
+
+  <p>
+    At STEMSphere, every session is crafted to <span class="highlight">unlock your full potential</span>.  
+    Our tutors blend deep STEM expertise with personalized teaching techniques that adapt to your style, pace, and goals.
+  </p>
+
+  <p>
+    Beyond grades, we cultivate <span class="highlight">critical thinking</span>,  
+    <span class="highlight">confidence</span>, and a genuine passion for learning—so concepts stick for life.
+  </p>
+
+  <ul>
+    <li>Tailored study plans targeting your unique challenges</li>
+    <li>Hands-on exercises and real-world applications</li>
+    <li>Regular progress check-ins with actionable feedback</li>
+    <li>Exclusive resources: practice exams, cheat-sheets, and tutorials</li>
+    <li>Flexible formats: one-on-one, small groups, or on-demand videos</li>
+    <li>Certified STEM experts & exam prep specialists</li>
+    <li>Encouraging, supportive environment for every learner</li>
+  </ul>
+
+  <p class="stat">
+    <span class="highlight">4 out of 5 students</span> saw improvements within  
+    <span class="highlight">just 4 weeks</span> of tutoring.
+  </p>
+
+  <p>
+    Ready to transform your academic journey?  
+    <span class="highlight">Join STEMSphere today</span> and start seeing real results.
+  </p>
+</section>
+<!-- END: Why Choose Our Tutoring Section -->
+
+
+
+<!-- Footer -->
+  <footer>© 2025 STEMSphere Academy. All rights reserved.</footer>
+
