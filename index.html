@@ -6,28 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>STEMSphere Academy</title>
 
-  <!-- Section: External Stylesheet -->
-  <link
-    href="https://assets.calendly.com/assets/external/widget.css"
-    rel="stylesheet"
-  />
-
-  <style>
-  /* ─── Base Styles ───────────────────────────────────────────── */
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-  }
-
-  /* ─── Header Container ──────────────────────────────────────── */
-  header {
-    position: relative;
-    padding: 3em 1em 1em;
-  }
-
+ 
   /* ─── Brand Logo (SP in red square + STEMSphere) ────────────── */
   .brand {
     position: absolute;
@@ -54,6 +33,352 @@
     font-weight: 700;
   }
 
+  /* ─── Title Group (Two-line Title) ─────────────────────────── */
+  .title-group {
+    display: inline-block;
+    margin-bottom: 0.2em;
+  }
+  .title-group span {
+    display: block;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0.2em 0;
+  }
+  .title-group span:first-child { color: #ffffff; }
+  .title-group span:last-child  { color: #ff0000; }
+
+  /* ─── Subtitle under Title ─────────────────────────────────── */
+  h2 {
+    /* auto-shrink between 0.8em and 1.6em based on viewport */
+    font-size: clamp(0.8em, 4.5vw, 1.6em);
+    white-space: nowrap;
+    color: #ccc;
+    margin-top: 0.2em;
+  }
+
+  /* ─── Course Bar ───────────────────────────────────────────── */
+  .course-bar {
+    display: inline-flex;
+    flex-wrap: wrap;             /* allow wrapping on narrow screens */
+    justify-content: center;
+    align-items: center;
+    padding: 0.4em 1em;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00f8ff, #ff00d0);
+    font-weight: 700;
+    font-size: 0.95em;
+    color: #fff;
+    margin-top: 0.6em;
+  }
+  .course-bar span + span { margin-left: 0.5em; }
+
+  /* ─── Main Container ───────────────────────────────────────── */
+  main {
+    max-width: 850px;
+    margin: auto;
+    padding: 2em 1em 3em;
+  }
+
+  /* ─── Electric Frame (Blue Glow + Flicker) ─────────────────── */
+  .electric-frame {
+    display: block !important;
+    position: relative;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 0 auto;
+    background-color: #000;
+    box-shadow: 0 0 12px #00aaff;
+    animation: flicker 3s infinite alternate;
+    max-width: 800px;
+    z-index: 500;
+  }
+  @keyframes flicker {
+    0%,100% { box-shadow: 0 0 12px #00aaff; }
+    40%     { box-shadow: 0 0 20px #00ffff; }
+    60%     { box-shadow: 0 0 8px  #0088ff; }
+  }
+
+  /* ─── Video Container ──────────────────────────────────────── */
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .cover-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .cover-overlay .play-btn {
+    font-size: 4em;
+    color: #fff;
+    opacity: 0.8;
+  }
+  #player,
+  .click-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+  .click-overlay { cursor: pointer; z-index: 700; }
+
+  /* ─── Progress Bar Styles ─────────────────────────────────── */
+  .progress-container {
+    width: 80%;
+    max-width: 300px;
+    height: 0.75em;
+    background: #333;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    overflow: hidden;
+  }
+  .progress-bar {
+    width: 50%;
+    height: 100%;
+    background: #ff0000;
+  }
+
+  /* ─── Lead-Capture Popup Form ─────────────────────────────── */
+  #popup-form {
+    display: none;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    z-index: 1000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+  }
+  #popup-form h3   { font-size: 1.4em; margin-bottom: 0.2em; font-weight: 700; }
+  #popup-form p    { margin-bottom: 1em; font-size: 1em; color: #ccc; }
+  #popup-form input,
+  #popup-form button {
+    width: 80%;
+    max-width: 300px;
+    padding: 0.8em;
+    margin: 0.5em 0;
+    border: none;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+    font-size: 1em;
+  }
+  #popup-form button { background: #ff0000; font-weight: 700; }
+
+  /* ─── Sign-Up & Schedule Buttons ───────────────────────────── */
+  .sign-up-btn,
+  .schedule-btn {
+    display: none;
+    position: absolute;
+    bottom: 15%;
+    padding: 0.8em 1.2em;
+    border: none;
+    border-radius: 4px;
+    background: #00FF00;
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 0 8px rgba(0,255,0,0.7);
+    cursor: pointer;
+    z-index: 900;
+  }
+  .sign-up-btn { left: 10%; }
+  .schedule-btn { right: 10%; }
+
+  /* ─── Arrow Indicator ─────────────────────────────────────── */
+  .arrow-up {
+    font-size: 2.2em;
+    color: #FFA500;
+    text-shadow: 0 0 6px #ffcc66;
+    letter-spacing: 0.5em;
+    margin: 0.3em 0 0;
+  }
+
+  /* ─── Access & Statistic Messages ─────────────────────────── */
+  .access-message {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin: 0.1em 0;
+  }
+  .stat-message {
+    font-size: 1.6em;
+    font-weight: 900;
+    color: #ff0000;
+    text-shadow: 0 0 8px #ff0000, 0 0 16px #aa0000;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 0 1em;
+  }
+
+  /* ─── Calendly & Footer ───────────────────────────────────── */
+  #calendly-popup { display: none; /* ... */ }
+  footer { font-size: 0.85em; color: #bbb; padding: 2em 1em; border-top: 1px solid #333; }
+
+  /* ─── Responsive Media Queries ────────────────────────────── */
+  @media (max-width: 600px) {
+    .title-group span  { font-size: 2em; }
+    h2 {
+      /* clamp down smaller on phones */
+      font-size: clamp(0.6em, 7vw, 1em);
+    }
+    .arrow-up         { font-size: 1.8em; }
+    .access-message   { font-size: 1em; }
+    .stat-message     { font-size: 1.2em; }
+    #popup-form input,
+    #popup-form button { width: 90%; font-size: 0.9em; }
+    .sign-up-btn,
+    .schedule-btn     { bottom: 10%; font-size: 0.9em; }
+    #calendly-popup .calendly-inline-widget {
+      width: 90%;
+      height: 400px;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <!-- Page Header -->
+  <header>
+    <!-- Brand logo + text -->
+    <div class="brand">
+      <span class="brand-logo">SP</span>
+      <span class="brand-text">STEMSphere</span>
+    </div>
+
+
+<!-- Calendly Inline Popup -->
+<div id="calendly-popup">
+  <div class="calendly-inline-widget" data-url="https://calendly.com/stemxsphere/trialclass"></div>
+  <button class="close-cal">Close</button>
+</div>
+
+<!-- External Scripts -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+  // Load YouTube IFrame API
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+
+  // Variables & Control Flags
+  let player,
+      pauseTime = 140,
+      signUpTime = 384,
+      scheduleTime = 394,
+      intervalId,
+      flags = { form: false, signUp: false, schedule: false };
+
+  // Initialize Player
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      host: 'https://www.youtube-nocookie.com',
+      videoId: '9bvO-33YZxE',
+      playerVars: {
+        controls: 0,
+        disablekb: 1,
+        modestbranding: 1,
+        rel: 0,
+        iv_load_policy: 3,
+        enablejsapi: 1,
+        autoplay: 0
+      },
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange
+      }
+    });
+  }
+
+  // Player Ready Handler
+  function onPlayerReady() {
+    document.querySelector('.click-overlay').addEventListener('click', () => {
+      if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    });
+  }
+
+  // Player State Change Handler
+  function onPlayerStateChange(event) {
+    const cover = document.querySelector('.cover-overlay');
+    if (event.data === YT.PlayerState.PLAYING) {
+      cover.style.display = 'none';
+      intervalId = setInterval(checkMilestones, 500);
+    } else {
+      cover.style.display = 'flex';
+      clearInterval(intervalId);
+    }
+  }
+
+  // Milestone Checker
+  function checkMilestones() {
+    const t = player.getCurrentTime();
+    if (!flags.form && t >= pauseTime) {
+      flags.form = true;
+      clearInterval(intervalId);
+      player.pauseVideo();
+      document.getElementById('popup-form').style.display = 'flex';
+    }
+    if (!flags.signUp && t >= signUpTime) {
+      flags.signUp = true;
+      document.querySelector('.sign-up-btn').style.display = 'block';
+    }
+    if (!flags.schedule && t >= scheduleTime) {
+      flags.schedule = true;
+      document.querySelector('.schedule-btn').style.display = 'block';
+    }
+  }
+
+  // DOM Ready & UI Event Handlers
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('leadForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      fetch(e.target.action, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors'
+      }).finally(() => {
+        document.getElementById('popup-form').style.display = 'none';
+        player.playVideo();
+      });
+    });
+
+    // Schedule Now → open STEMSphere chat launcher
+    document.querySelector('.schedule-btn').addEventListener('click', () => {
+      document.getElementById('chatLauncher').click();
+    });
+
+    document.querySelector('.close-cal').addEventListener('click', () => {
+      document.getElementById('calendly-popup').style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
+
+<!-- BEGIN: Section Heading Overrides -->
+<style>
+  /* Make only these section titles white */
+  #on-demand-courses h2,
+  #tutoring-subjects h2 {
+    color: #ffffff !important;
+  }
+</style>
+<!-- END: Section Heading Overrides -->
 
 
 <!-- 🌟 BEGIN: STEMSphere Chat Launcher + Fullscreen Calendly Prefill (Mobile Fix) -->
@@ -311,82 +636,90 @@
 <!-- END: Courses & Tutoring Styles -->
 
 <div class="courses-tutoring">
-  <!-- BEGIN: Tutoring Subjects Section -->
-  <section id="tutoring-subjects">
-    <h2>Personalized Tutoring in Every Subject We Offer</h2>
-    <p class="intro">
-      One-on-one or small-group sessions with our expert tutors. From weekly check-ins to intensive exam prep, we cover every level.
-    </p>
-    <img
-      src="https://i.postimg.cc/mkZDYz4T/Ads-11.png"
-      alt="Tutoring Banner"
-      class="tutoring-banner"
-    />
-    <div class="tutor-grid">
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/ZRyfZcDM/Screenshot-2025-08-28-195306.png" alt="English Mastery Icon" />
-        <h4>English Mastery</h4>
-        <p class="tutor-desc">Improve reading, writing, and speaking.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/43xqCpgD/9104950.png" alt="Public Speaking Icon" />
-        <h4>Public Speaking Foundations</h4>
-        <p class="tutor-desc">Enhance your confidence and clarity.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/PxKCCzDt/Screenshot-2025-08-28-191534.png" alt="Algebra Essentials Icon" />
-        <h4>Algebra Essentials</h4>
-        <p class="tutor-desc">From linear equations to polynomials.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/xCjCVJ4B/2792361.png" alt="Geometry Foundations Icon" />
-        <h4>Geometry Foundations</h4>
-        <p class="tutor-desc">Master shapes, angles, and proofs.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/VvpLt7kc/Screenshot-2025-08-28-192149.png" alt="Pre-Calculus & Trig Icon" />
-        <h4>Pre-Calculus &amp; Trigonometry</h4>
-        <p class="tutor-desc">Functions, limits, and trig insights.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/mDhsSQqZ/Screenshot-2025-08-28-191639.png" alt="AP Calculus AB & BC Icon" />
-        <h4>AP® Calculus AB &amp; BC</h4>
-        <p class="tutor-desc">Intensive prep for derivatives and integrals.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/MGH6s2f8/5932783.png" alt="AP Statistics Icon" />
-        <h4>AP® Statistics</h4>
-        <p class="tutor-desc">Data analysis and probability fundamentals.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/dVtw1PBT/test-tube-and-chemical-compound-chemistry-colored-icon-vector.jpg" alt="General Chemistry Icon" />
-        <h4>General Chemistry Crash Course</h4>
-        <p class="tutor-desc">Core concepts in atoms and reactions.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/FHdhttVb/Screenshot-2025-08-28-193154.png" alt="Organic Chemistry Icon" />
-        <h4>Organic Chemistry Deep Dive</h4>
-        <p class="tutor-desc">Mechanisms and organic compound synthesis.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/xCR2G99Q/images-1.jpg" alt="IB Chemistry SL & HL Icon" />
-        <h4>IB Chemistry SL &amp; HL Prep</h4>
-        <p class="tutor-desc">Curriculum-focused chemistry strategies.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/RFPYVhMW/Screenshot-2025-08-28-193929.png" alt="AP Biology Masterclass Icon" />
-        <h4>AP® Biology Masterclass</h4>
-        <p class="tutor-desc">Dive into cell biology and genetics.</p>
-      </div>
-      <div class="tutor-subject">
-        <img src="https://i.postimg.cc/FHVXX9JL/Screenshot-2025-08-28-194223.png" alt="MCAT Biology Review Icon" />
-        <h4>MCAT Biology Review</h4>
-        <p class="tutor-desc">High-yield biology for MCAT success.</p>
-      </div>
+ <!-- BEGIN: Tutoring Subjects Section -->
+<section id="tutoring-subjects">
+  <h2>Personalized Tutoring in Every Subject We Offer</h2>
+  <p class="intro">
+    One-on-one or small-group sessions with our expert tutors. From weekly check-ins to intensive exam prep, we cover every level.
+  </p>
+  <img
+    src="https://i.postimg.cc/mkZDYz4T/Ads-11.png"
+    alt="Tutoring Banner"
+    class="tutoring-banner"
+  />
+  <div class="tutor-grid">
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/ZRyfZcDM/Screenshot-2025-08-28-195306.png" alt="English Mastery Icon" />
+      <h4>English Mastery</h4>
+      <p class="tutor-desc">Improve reading, writing, and speaking.</p>
     </div>
-    <a href="#" class="cta-button">Book your free trial</a>
-  </section>
-  <!-- END: Tutoring Subjects Section -->
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/43xqCpgD/9104950.png" alt="Public Speaking Icon" />
+      <h4>Public Speaking Foundations</h4>
+      <p class="tutor-desc">Enhance your confidence and clarity.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/PxKCCzDt/Screenshot-2025-08-28-191534.png" alt="Algebra Essentials Icon" />
+      <h4>Algebra Essentials</h4>
+      <p class="tutor-desc">From linear equations to polynomials.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/xCjCVJ4B/2792361.png" alt="Geometry Foundations Icon" />
+      <h4>Geometry Foundations</h4>
+      <p class="tutor-desc">Master shapes, angles, and proofs.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/VvpLt7kc/Screenshot-2025-08-28-192149.png" alt="Pre-Calculus & Trig Icon" />
+      <h4>Pre-Calculus &amp; Trigonometry</h4>
+      <p class="tutor-desc">Functions, limits, and trig insights.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/mDhsSQqZ/Screenshot-2025-08-28-191639.png" alt="AP Calculus AB & BC Icon" />
+      <h4>AP® Calculus AB &amp; BC</h4>
+      <p class="tutor-desc">Intensive prep for derivatives and integrals.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/MGH6s2f8/5932783.png" alt="AP Statistics Icon" />
+      <h4>AP® Statistics</h4>
+      <p class="tutor-desc">Data analysis and probability fundamentals.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/dVtw1PBT/test-tube-and-chemical-compound-chemistry-colored-icon-vector.jpg" alt="General Chemistry Icon" />
+      <h4>General Chemistry Crash Course</h4>
+      <p class="tutor-desc">Core concepts in atoms and reactions.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/FHdhttVb/Screenshot-2025-08-28-193154.png" alt="Organic Chemistry Icon" />
+      <h4>Organic Chemistry Deep Dive</h4>
+      <p class="tutor-desc">Mechanisms and organic compound synthesis.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/xCR2G99Q/images-1.jpg" alt="IB Chemistry SL & HL Icon" />
+      <h4>IB Chemistry SL &amp; HL Prep</h4>
+      <p class="tutor-desc">Curriculum-focused chemistry strategies.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/RFPYVhMW/Screenshot-2025-08-28-193929.png" alt="AP Biology Masterclass Icon" />
+      <h4>AP® Biology Masterclass</h4>
+      <p class="tutor-desc">Dive into cell biology and genetics.</p>
+    </div>
+    <div class="tutor-subject">
+      <img src="https://i.postimg.cc/FHVXX9JL/Screenshot-2025-08-28-194223.png" alt="MCAT Biology Review Icon" />
+      <h4>MCAT Biology Review</h4>
+      <p class="tutor-desc">High-yield biology for MCAT success.</p>
+    </div>
+  </div>
+
+  <!-- CTA Button: capitalized and opens the fullscreen Calendly wizard -->
+  <a
+    href="#"
+    class="cta-button"
+    onclick="event.preventDefault(); document.getElementById('chatLauncher').click();"
+  >
+    Book Your Free Trial
+  </a>
+</section>
+<!-- END: Tutoring Subjects Section -->
 
   <!-- BEGIN: On-Demand Courses Section -->
   <section id="on-demand-courses">
@@ -572,6 +905,96 @@
 
 
 
-<!-- Footer -->
-  <footer>© 2025 STEMSphere Academy. All rights reserved.</footer>
+<!-- BEGIN: FAQ & Contact Section -->
+<style>
+  /* FAQ & Contact Styles */
+  #faq-contact {
+    background: #111;
+    color: #fff;
+    padding: 2rem 1rem;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  #faq-contact h3 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  #faq-contact details {
+    margin: 1rem auto;
+    max-width: 800px;
+    background: #222;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    box-sizing: border-box;
+  }
+  #faq-contact summary {
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #00dffc;
+    outline: none;
+  }
+  #faq-contact details p {
+    margin: 0.5rem 0 0 1.25em;
+    line-height: 1.5;
+    color: #ddd;
+  }
+  footer {
+    background: #000;
+    color: #bbb;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+  .footer-links a,
+  .footer-contact a {
+    color: #00dffc;
+    text-decoration: none;
+    margin: 0 0.5rem;
+  }
+  .footer-links a:hover,
+  .footer-contact a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<section id="faq-contact">
+  <h3>Frequently Asked Questions</h3>
+
+  <details>
+    <summary>How do I book a free trial session?</summary>
+    <p>Click the “Book Your Free Trial” button above or reach out to us via email. We’ll schedule your session within 24 hours and match you with the perfect tutor.</p>
+  </details>
+
+  <details>
+    <summary>What subjects and levels do you cover?</summary>
+    <p>We offer personalized tutoring in Math, Chemistry, Biology, Coding, English, Public Speaking, SAT/ACT prep, and more—from elementary through adult learners.</p>
+  </details>
+
+  <details>
+    <summary>What’s your cancellation and rescheduling policy?</summary>
+    <p>You can cancel or reschedule up to 24 hours before your session at no extra cost. Simply reply to your session confirmation email or contact support.</p>
+  </details>
+
+  <details>
+    <summary>How do I pay and what are your rates?</summary>
+    <p>We accept all major credit cards and PayPal. Rates vary by tutor and format; view detailed pricing on our Pricing page or email support for a custom package.</p>
+  </details>
+</section>
+
+<footer>
+  © 2025 STEMSphere Academy. All rights reserved.
+  <nav class="footer-links">
+    <a href="#faq-contact">FAQs</a>|
+    <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+  </nav>
+  <p class="footer-contact">
+    Need help? Contact us at 
+    <a href="mailto:support@stemsphere.academy">support@stemsphere.academy</a>
+  </p>
+</footer>
+
 
